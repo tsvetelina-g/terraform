@@ -50,16 +50,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
+      - name: Checkout the repository
+        uses: actions/checkout@v4
 
-    - name: Install Terraform
-      uses: hashicorp/setup-terraform@v4
+      - name: Login to Azure via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Download Terraform plan artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: tfplan
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve tfplan
+      - name: Download Terraform plan artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
