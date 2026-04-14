@@ -44,6 +44,22 @@ jobs:
     # Runs terraform apply
     # - name: Terraform Apply
     #   run: terraform apply
+  
+  terraform_apply:
+    needs: terraform_plan
+    runs-on: ubuntu-latest
 
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
 
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v4
 
+    - name: Download Terraform plan artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: tfplan
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
