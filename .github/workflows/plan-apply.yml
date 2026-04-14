@@ -35,7 +35,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan out=tfplan
+      run: terraform plan -out=tfplan
 
     # Checks that all Terraform configuration files adhere to a canonical format
     # - name: Terraform Format
