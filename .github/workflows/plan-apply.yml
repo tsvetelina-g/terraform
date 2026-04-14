@@ -26,14 +26,14 @@ jobs:
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v4
-
+      
     - name: Terraform Init
       run: terraform init    
 
     - name: Terraform Plan
       run: terraform plan -out=tfplan
 
-    - name: Upload Terraform plan   # 👈 ТОВА ЛИПСВАШЕ
+    - name: Upload Terraform plan
       uses: actions/upload-artifact@v4
       with:
         name: tfplan
